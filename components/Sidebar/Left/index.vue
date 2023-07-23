@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-red-500 h-screen flex flex-col">
+  <div class="h-screen flex flex-col">
     <div
       class="p-2 m-2 rounded-full hover:bg-blue-50 w-min dark:hover:bg-white/20"
       :class="defaultTransition"

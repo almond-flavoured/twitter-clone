@@ -13,15 +13,13 @@
 
           <!-- Main content -->
 
-          <!-- <main class="col-span-12 md:col-span-8 xl:col-span-6 bg-red-500">
+          <main class="col-span-12 md:col-span-8 xl:col-span-6 bg-red-500">
             <h1>aside</h1>
-          </main> -->
+          </main>
 
           <!-- Right sidebar -->
 
-          <div
-            class="md:block xl:col-span-4 md:col-span-3 bg-blue-500 col-span-12"
-          >
+          <div class="hidden md:block xl:col-span-4 md:col-span-3 col-span-12">
             <div class="sticky top-0">
               <SidebarRight />
             </div>
