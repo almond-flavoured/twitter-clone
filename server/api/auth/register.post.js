@@ -1,5 +1,6 @@
 import { sendError } from 'h3';
-import { createUser } from 'server/db/users';
+import { createUser } from '~/server/db/users';
+import { userTransformer } from '~/server/transformers/user';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -15,7 +16,7 @@ export default defineEventHandler(async (event) => {
   if (password !== repeatPassword) {
     sendError(
       event,
-      createError({ statusCode: 400, statusMessage: 'Password do not match' })
+      createError({ statusCode: 400, statusMessage: 'Password does not match' })
     );
     return;
   }
@@ -25,9 +26,10 @@ export default defineEventHandler(async (event) => {
     email,
     password,
     name,
+    profileImage: 'https://picsum.photos/200/200',
   };
 
-  const user = await createUser();
+  const user = await createUser(userData);
 
-  return { body };
+  return { body: userTransformer(user) };
 });
