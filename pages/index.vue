@@ -1,5 +1,7 @@
 <template>
-  <MainSection title="Home" :loading="false"> Content </MainSection>
+  <MainSection title="Home" :loading="loading"> content </MainSection>
 </template>
 
-<script setup></script>
+<script setup>
+const loading = ref(false);
+</script>
