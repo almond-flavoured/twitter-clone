@@ -20,6 +20,7 @@
     "@heroicons/vue": "^1.0.6",
     "@prisma/client": "^5.0.0",
     "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
     "server": "^1.0.38",
     "vls": "^0.8.5"

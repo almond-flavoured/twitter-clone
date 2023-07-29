@@ -1,4 +1,9 @@
 import { getUserByUsername } from '~/server/db/users';
+import { generateTokens, sendRefreshToken } from '~/server/utils/jwt';
+import bcrypt from 'bcrypt';
+import { userTransformer } from '~/server/transformers/user';
+import { createRefreshToken } from '~/server/db/refreshTokens';
+import { sendError } from 'h3';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -27,10 +32,35 @@ export default defineEventHandler(async (event) => {
   }
 
   // Compare passwords
+  const doesThePasswordMatch = await bcrypt.compare(password, user.password);
+
+  if (!doesThePasswordMatch) {
+    sendError(
+      event,
+      createError({
+        statusCode: 400,
+        statusMessage: 'Username or password is invalid',
+      })
+    );
+    return;
+  }
 
   // Generate Tokens
+  // Access token
+  // Refresh token
+  const { accessToken, refreshToken } = generateTokens(user);
+
+  // Save it insdie db
+  await createRefreshToken({
+    token: refreshToken,
+    userId: user.id,
+  });
+
+  // add http only cookie
+  sendRefreshToken(event, refreshToken);
 
   return {
-    user,
+    user: userTransformer(user),
+    access_Token: accessToken,
   };
 });
